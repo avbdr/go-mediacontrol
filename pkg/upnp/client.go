@@ -1,20 +1,18 @@
 package upnp
 
 import (
-	"crypto/tls"
-	"encoding/json"
-	"encoding/xml"
-	"fmt"
 	"github.com/avbdr/samsung-tv-api/pkg/device"
-	xj "github.com/basgys/goxml2json"
+	"encoding/xml"
+	"crypto/tls"
 	"io/ioutil"
-	"log"
-	"net"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 	"time"
+	"fmt"
+	"log"
+	"net"
 )
 
 // This package covers the support for the Universal Plug & Play (UPNP)
@@ -31,7 +29,6 @@ type UpnpClient struct {
 //   - support binding to a non 200 response or determine the error message returned and use it in the error response
 func (s *UpnpClient) makeSoapRequest(action, arguments, protocol string, output interface{}) error {
 	u := s.BaseUrl(protocol + "1").String()
-	fmt.Println(u)
 
 	body := fmt.Sprintf("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"+
 		"<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">\n"+
@@ -51,26 +48,18 @@ func (s *UpnpClient) makeSoapRequest(action, arguments, protocol string, output 
 
 	req, err := http.NewRequest("POST", u, strings.NewReader(body))
 	req.Header.Set("SOAPAction", fmt.Sprintf("\"urn:schemas-upnp-org:service:%s:1#%s\"", protocol, action))
-
 	if err != nil {
 		return err
 	}
 
 	resp, clientErr := client.Do(req)
-
 	if clientErr != nil {
 		return clientErr
 	}
 
 	defer resp.Body.Close()
-
-	content, convertErr := xj.Convert(resp.Body)
-
-	if convertErr != nil {
-		return convertErr
-	}
-
-	return json.Unmarshal(content.Bytes(), &output)
+	bodyb, _ := ioutil.ReadAll(resp.Body)
+	return xml.Unmarshal(bodyb, &output)
 }
 
 // GetCurrentVolume returns the value of the current volume level

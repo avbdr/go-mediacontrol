@@ -6,20 +6,20 @@ type GetDeviceVolumeResponse struct {
 	Envelope struct {
 		Body struct {
 			GetVolumeResponse struct {
-				CurrentVolume string `json:"CurrentVolume"`
-			} `json:"GetVolumeResponse"`
-		} `json:"Body"`
-	} `json:"Envelope"`
+				CurrentVolume string `xml:"CurrentVolume"`
+			} `xml:"GetVolumeResponse"`
+		} `xml:"Body"`
+	} `xml:"Envelope"`
 }
 
 type GetCurrentMuteStatusResponse struct {
 	Envelope struct {
 		Body struct {
 			GetMuteResponse struct {
-				CurrentMute string `json:"CurrentMute"`
-			} `json:"GetMuteResponse"`
-		} `json:"Body"`
-	} `json:"Envelope"`
+				CurrentMute string `xml:"CurrentMute"`
+			} `xml:"GetMuteResponse"`
+		} `xml:"Body"`
+	} `xml:"Envelope"`
 }
 
 type GetPositionInfoResponse struct {
@@ -31,9 +31,9 @@ type GetPositionInfoResponse struct {
 				TrackDuration string
 				TrackMetaData string
 				TrackURI      string
-			} `json:"GetPositionInfoResponse"`
-		} `json:"Body"`
-	} `json:"Envelope"`
+			} `xml:"GetPositionInfoResponse"`
+		} `xml:"Body"`
+	} `xml:"Envelope"`
 }
 
 type upnpDescribeDevice_XML struct {
