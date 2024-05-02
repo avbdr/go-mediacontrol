@@ -83,14 +83,7 @@ func main() {
 		flag.PrintDefaults()
 		return
 	}
-
 	loadConfig()
-	/*
-		if len(os.Args) == 3 {
-			deviceId = 0 // fixme. find the right tv from the config by name
-			fmt.Printf("TV: %s", os.Args[2])
-		}
-	*/
 
 	if Args[0] == "devices" {
 		for id, d := range devices_ {
@@ -178,11 +171,11 @@ func main() {
 	}
 
 	if Args[0] == "stream" {
-		if len(os.Args) != 3 {
-			log.Fatal("no key specified")
-		}
-		log.Printf("Streaming %s", os.Args[2])
-		devApi.Stream(os.Args[2])
+        if flag.NArg() != 2 {
+            log.Fatal("no stream url specified")
+        }
+		log.Printf("Streaming %s", Args[1])
+		devApi.Stream(Args[1])
 		return
 	}
 
