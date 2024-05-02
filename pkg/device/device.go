@@ -29,13 +29,14 @@ type DeviceInfo struct {
 	Ip    string `json:"ip"`
 	Type  string `json:"type"`
 	Token string `json:"token,omitempty"`
+	Udn  string  `json:"udn"`
 }
 
-func Exists(devices []DeviceInfo, dev DeviceInfo) bool {
-	for _, d := range devices {
-		if d.Ip == dev.Ip {
-			return true
+func Find (devices []DeviceInfo, dev DeviceInfo) int {
+	for i, d := range devices {
+		if d.Udn == dev.Udn {
+			return i
 		}
 	}
-	return false
+	return -1
 }

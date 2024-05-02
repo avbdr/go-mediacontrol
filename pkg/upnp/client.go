@@ -240,15 +240,15 @@ func Discover(filter string, manufacturer string, devType string) []device.Devic
 		return found
 	}
 	defer conn.Close()
-	conn.SetReadDeadline(time.Now().Add(5 * time.Second))
+	conn.SetReadDeadline(time.Now().Add(time.Second))
 
 	discoverMessage := []byte(
 		"M-SEARCH * HTTP/1.1\r\n" +
-			"HOST: 239.255.255.250:1900\r\n" +
-			"MAN: \"ssdp:discover\"\r\n" +
-			"MX: 1\r\n" +
-			"ST: ssdp:all\r\n" +
-			"\r\n",
+		"HOST: 239.255.255.250:1900\r\n" +
+		"MAN: \"ssdp:discover\"\r\n" +
+		"MX: 1\r\n" +
+		"ST: ssdp:all\r\n" +
+		"\r\n",
 	)
 	_, err = conn.WriteToUDP(discoverMessage, udpAddr)
 	if err != nil {
@@ -287,6 +287,7 @@ func Discover(filter string, manufacturer string, devType string) []device.Devic
 			Ip:   parsedURL.Hostname(),
 			Type: devType,
 			Mac:  props.MacAddress,
+			Udn:  props.Udn,
 		}
 
 		d.Name = props.FriendlyName

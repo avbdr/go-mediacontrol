@@ -49,6 +49,7 @@ type upnpDevice_XML struct {
 	ModelName        string `xml:"modelName"`
 	RoomName         string `xml:"roomName"`
 	MacAddress       string `xml:"MACAddress"`
+	Udn				 string `xml:"UDN"`
 }
 
 type Item_XML struct {

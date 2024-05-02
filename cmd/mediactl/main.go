@@ -19,18 +19,24 @@ var devices_ []device.DeviceInfo
 func zeroconfDisco() {
 	samsungs := samsung_tv_api.Discover()
 	for _, dev := range samsungs {
-		if !device.Exists(devices_, dev) {
+		id := device.Find(devices_, dev)
+		if id == -1 {
 			log.Printf("Found %v\n", dev)
 			devices_ = append(devices_, dev)
+		} else {
+			devices_[id].Ip = dev.Ip
 		}
 	}
 
 	sonosDevs := sonos_api.Discover()
 	for _, dev := range sonosDevs {
-		if !device.Exists(devices_, dev) {
+		id := device.Find(devices_, dev)
+		if id == -1 {
 			log.Printf("Found %v\n", dev)
 			devices_ = append(devices_, dev)
-		}
+        } else {
+            devices_[id].Ip = dev.Ip
+        }
 	}
 }
 

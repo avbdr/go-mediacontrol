@@ -20,7 +20,7 @@ func NewSonosDevice(host string) *SonosClient {
 			return &url.URL{
 				Scheme: "http",
 				Host:   fmt.Sprintf("%s:%d", host, 1400),
-				Path:   fmt.Sprintf("MediaRenderer/AVTransport/Control"),
+				Path:   "MediaRenderer/AVTransport/Control",
 			}
 		},
 	}
